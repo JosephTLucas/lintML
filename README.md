@@ -12,9 +12,9 @@ Things we check for:
 1) **Plaintext credentials.**
 2) **Unsafe deserialization.**
 3) **Serialization to unsafe formats.**
-4) **Training without augmentation.** no transforms
-5) **Using untrustworthy assets.** laion dataloader
-6) **Evidence of insecure services.** unauth mlflow, flask debug
+4) **Training without augmentation.**
+5) **Using untrustworthy assets.**
+6) **Evidence of insecure services.**
 
 Things we **don't** check for:
 -  Formatting

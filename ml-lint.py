@@ -71,7 +71,7 @@ if __name__ == "__main__":
     if not Path(args.dir).is_dir():
         print("Provide a target directory")
     else:
-        m = MLlint(indir=args.dir)
+        m = MLlint(indir=Path(args.dir).resolve())
         loop = asyncio.get_event_loop()
         creds, code_findings = loop.run_until_complete(m.get_observations())
         m.generate_report(creds, code_findings)

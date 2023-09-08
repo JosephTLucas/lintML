@@ -2,6 +2,8 @@ from observation import Observation
 import json
 from tempfile import TemporaryDirectory
 from ipynb_convert import get_ipynb_code
+from pathlib import Path
+import os
 
 
 def create_semgrep_observation(finding):
@@ -23,12 +25,14 @@ async def semgrep_prep(dir):
 
 async def run_semgrep(client, dir):
     tmpdir = await semgrep_prep(dir)
+    rules = Path('semgrep_rules/ready')
     container_bytes = client.containers.run(
         "returntocorp/semgrep:latest",
-        command="semgrep --config 'p/trailofbits' --config 'p/python' --json /pwd --metrics=off -q --exclude-rule trailofbits.python.automatic-memory-pinning.automatic-memory-pinning",
+        command="semgrep --config '/rules/' --json /pwd --metrics=off -q",
         stdout=True,
         stderr=True,
-        volumes={dir: {"bind": "/pwd", "mode": "ro"}},
+        volumes={dir: {"bind": "/pwd", "mode": "ro"},
+                 rules.resolve(): {"bind": "/rules", "mode": "ro"}},
     )
     container_str = container_bytes.decode("utf8")
     container_json = json.loads(container_str)
