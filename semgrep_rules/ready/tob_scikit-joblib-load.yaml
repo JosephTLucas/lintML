@@ -1,7 +1,7 @@
 rules:
 - id: scikit-joblib-load
   message: >-
-    Scikit `joblib` uses pickle under the hood. Functions reliant on pickle can result in arbitrary code execution.
+    From Trail of Bits: Scikit `joblib` uses pickle under the hood. Functions reliant on pickle can result in arbitrary code execution.
     Consider using `skops` instead.
   languages: [python]
   severity: WARNING
