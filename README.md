@@ -2,11 +2,19 @@
 
 _The security linter for environments that shouldn't need linting._
 
-Linters (and let's be honest with ourselves, any measures of code quality) have long been reserved for production environments. But we've increasingling seen that the most impactful machine learning attacks happen during **training time.** Traditional linters often rely on CI/CD pipelines or git commit hooks and are often opinionated on things like code formatting. However, many research never touches git until it is far down the path of productionization and researchers write some of the sloppiest code known to humankind (in the name of science). So how can we arm researchers with quick sanity checks for their research code? ML-Lint.
+Linters (and let's be honest with ourselves, any measures of code quality) have long been reserved for production environments. But we've increasingly seen that the most impactful machine learning attacks happen during **training time.** Traditional linters often rely on CI/CD pipelines or git commit hooks and are often opinionated on things like code formatting. However, many research never touches git until it is far down the path of productionization and researchers write some of the sloppiest code known to humankind (in the name of science). So how can we arm researchers with quick sanity checks for their research code? ML-Lint.
 
 ## Philosophy
 
 ML-Lint is a simple python script (backed by dockerized security tools) that can give researchers and security teams some quick insight into potential risk in machine learning research projects. It checks for valid, plaintext credentials and uses static analysis to identify risky code patterns.
+
+Things we check for:
+1) **Plaintext credentials.**
+2) **Unsafe deserialization.**
+3) **Serialization to unsafe formats.**
+4) **Training without augmentation.** no transforms
+5) **Using untrustworthy assets.** laion dataloader
+6) **Evidence of insecure services.** unauth mlflow, flask debug
 
 ## Compatibility
 
