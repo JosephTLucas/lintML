@@ -1,5 +1,7 @@
 # ML-Lint
 
+![](banner.png)
+
 _The security linter for environments that shouldn't need linting._
 
 Linters (and let's be honest with ourselves, any measures of code quality) have long been reserved for production environments. But we've increasingly seen that the most impactful machine learning attacks happen during **training time.** Traditional linters often rely on CI/CD pipelines or git commit hooks and are often opinionated on things like code formatting. However, many research never touches git until it is far down the path of productionization and researchers write some of the sloppiest code known to humankind (in the name of science). So how can we arm researchers with quick sanity checks for their research code? ML-Lint.
