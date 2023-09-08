@@ -1,0 +1,21 @@
+rules:
+- id: pickles
+  message: >-
+    Importing pickle is a bad sign. Think about how you're going to use this object and verify its integrity later.
+  languages: [python]
+  severity: WARNING
+  metadata:
+    category: security
+    cwe: "CWE-502: Deserialization of Untrusted Data"
+    subcategory: [guardrail]
+    confidence: MEDIUM
+    likelihood: MEDIUM
+    impact: HIGH
+    technology: [python]
+    description: "Potential arbitrary code execution from deserializing pickled objects."
+    vulnerability_class:
+      - Insecure Deserialization
+    references:
+      - https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/
+
+  pattern: import pickle
