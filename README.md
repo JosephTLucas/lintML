@@ -16,6 +16,9 @@ Things we check for:
 5) **Using untrustworthy assets.** laion dataloader
 6) **Evidence of insecure services.** unauth mlflow, flask debug
 
+Things we **don't** check for:
+-  Formatting
+
 ## Compatibility
 
 Currently ML-Lint is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences).

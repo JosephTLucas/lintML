@@ -46,6 +46,7 @@ class MLlint:
             logging.exception(
                 "Unable to resolve docker environment. Ensure user is logged into docker and a member of the docker group on the host."
             )
+            exit()
         async with asyncio.TaskGroup() as tg:
             # trufflehog = tg.create_task(self.get_container(client, run_trufflehog))
             # semgrep = tg.create_task(self.get_container(client, run_semgrep))
@@ -67,7 +68,10 @@ if __name__ == "__main__":
     parser.add_argument("dir")
     args = parser.parse_args()
 
-    m = MLlint(indir=args.dir)
-    loop = asyncio.get_event_loop()
-    creds, code_findings = loop.run_until_complete(m.get_observations())
-    m.generate_report(creds, code_findings)
+    if not Path(args.dir).is_dir():
+        print("Provide a target directory")
+    else:
+        m = MLlint(indir=args.dir)
+        loop = asyncio.get_event_loop()
+        creds, code_findings = loop.run_until_complete(m.get_observations())
+        m.generate_report(creds, code_findings)
