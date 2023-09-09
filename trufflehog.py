@@ -14,9 +14,6 @@ def create_trufflehog_observation(finding):
 
     Returns:
         Observation: An observation object containing details about the finding.
-
-    Note:
-        - The `finding` dictionary is expected to have specific keys and values as shown in the example.
     """
     return Observation(
         category="Verified Credential",

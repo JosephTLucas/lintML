@@ -67,7 +67,7 @@ async def run_semgrep(client: docker.DockerClient, dir: Path) -> List[Observatio
     try:
         container_bytes = client.containers.run(
             "returntocorp/semgrep:latest",
-            command="semgrep --config '/rules/' --json /pwd --metrics=off -q",
+            command="semgrep --config '/rules/' --config '' --json /pwd --metrics=off -q",
             stdout=True,
             stderr=True,
             volumes={
