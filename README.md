@@ -21,7 +21,7 @@ Things we check for:
 Things we **don't** check for:
 - Formatting 
 
-Many formatters measure quality by the breadth of rules, leading to complicated CI/CD configurations where we're ignoring their flashing lights. With a linter for research and machine learning training code, we want to be high signal/low noise. Every rule represents a real exploitable vulnerability that you should _seriously_ consider engineering around to preserve the integrity of your research. ML-Lint shouldn't distract you from getting stuff done. Ideally, most times when you run ML-Lint, you'll have no alerts. :thumbsup:
+Many linters measure quality by the breadth of rules, leading to complicated CI/CD configurations where we're ignoring their flashing lights. With a linter for research and machine learning training code, we want to be high signal/low noise. Every rule represents a real exploitable vulnerability that you should _seriously_ consider engineering around to preserve the integrity of your research. ML-Lint shouldn't distract you from getting stuff done. Ideally, most times when you run ML-Lint, you'll have no alerts. :thumbsup:
 
 ## Compatibility
 
