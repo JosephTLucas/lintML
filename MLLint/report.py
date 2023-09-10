@@ -3,6 +3,8 @@ from pathlib import Path
 from fastavro import schema, writer, reader
 from typing import List, Dict
 from itertools import chain
+from importlib_resources import files
+import schemas
 
 
 class Report:
@@ -60,7 +62,8 @@ class Report:
             Any exceptions raised by schema.load_schema() or the Avro writer.
         """
         Path("obs").mkdir(parents=True, exist_ok=True)
-        s = schema.load_schema("observation.avsc")
+        inp_file = files(schemas).joinpath("observation.avsc")
+        s = schema.load_schema(inp_file)
         with open(self.outfile, "wb") as out:
             writer(
                 out,

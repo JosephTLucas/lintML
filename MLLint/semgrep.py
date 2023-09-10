@@ -63,16 +63,24 @@ async def run_semgrep(client: docker.DockerClient, dir: Path) -> List[Observatio
         Any exceptions raised by Docker operations, JSON decoding, or Observation creation.
     """
     tmpdir = await semgrep_prep(dir)
-    rules = Path("semgrep_rules/ready")
+    rule_root = "https://raw.githubusercontent.com/JosephTLucas/ml-lint/main/src/semgrep_rules/ready/"
+    rules = ["",
+             "huggingface-remote-code.yaml",
+             'pickles.yaml',
+             "sg_shelve.yaml",
+             "tob_pickles-in-numpy.yaml",
+             "tob_pickles-in-pandas.yaml",
+             "tob_pickles-in-pytorch.yaml",
+             "tob_scikit-joblib-load.yaml"]
+    config = f" --config {rule_root}".join(rules)
     try:
         container_bytes = client.containers.run(
             "returntocorp/semgrep:latest",
-            command="semgrep --config '/rules/' --json /pwd --metrics=off -q",
+            command=f"semgrep{config} --json /pwd --metrics=off -q",
             stdout=True,
             stderr=True,
             volumes={
                 dir: {"bind": "/pwd", "mode": "ro"},
-                rules.resolve(): {"bind": "/rules", "mode": "ro"},
             },
         )
         container_str = container_bytes.decode("utf8")
