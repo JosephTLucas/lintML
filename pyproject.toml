@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mllint"
+name = "lintML"
 version = "0.0.1"
 authors = [
   { name="Joe Lucas", email="joe@joetl.com"},
@@ -18,5 +18,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/JosephTLucas/ml-lint"
-"Bug Tracker" = "https://github.com/JosephTLucas/ml-lint/issues"
+"Homepage" = "https://github.com/JosephTLucas/lintML"
+"Bug Tracker" = "https://github.com/JosephTLucas/lintML/issues"

@@ -11,7 +11,7 @@ from report import Report
 from utils import is_valid_directory
 
 
-class MLLint:
+class lintML:
     def __init__(self, indir, outfile="obs/observation.avro"):
         self.indir = Path(indir)
         self.outfile = Path(outfile)
@@ -52,7 +52,7 @@ class MLLint:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog="MLLint",
+        prog="lintML",
         description="Linter for ML training code",
         epilog="Have any rules we should add?",
     )
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         "--full-report", action="store_true", help="Generate a full report"
     )
     args = parser.parse_args()
-    m = MLLint(indir=Path(args.dir).resolve())
+    m = lintML(indir=Path(args.dir).resolve())
     loop = asyncio.get_event_loop()
     creds, code_findings = loop.run_until_complete(m.get_observations())
     print(m.generate_report(creds, code_findings, args.full_report))

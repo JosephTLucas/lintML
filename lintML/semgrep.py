@@ -63,7 +63,7 @@ async def run_semgrep(client: docker.DockerClient, dir: Path) -> List[Observatio
         Any exceptions raised by Docker operations, JSON decoding, or Observation creation.
     """
     tmpdir = await semgrep_prep(dir)
-    rule_root = "https://raw.githubusercontent.com/JosephTLucas/ml-lint/main/MLLint/semgrep_rules/ready/"
+    rule_root = "https://raw.githubusercontent.com/JosephTLucas/lintML/main/lintML/semgrep_rules/ready/"
     rules = ["",
              "huggingface-remote-code.yaml",
              'pickles.yaml',
