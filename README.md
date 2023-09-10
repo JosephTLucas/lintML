@@ -11,11 +11,14 @@ Linters (and let's be honest with ourselves, any measures of code quality) have 
 MLLint is a simple python script (backed by dockerized security tools) that can give researchers and security teams some quick insight into potential risk in machine learning research projects. It checks for valid, plaintext credentials and uses static analysis to identify risky code patterns.
 
 Things we check for:
+_(today)_
 1) **Plaintext credentials.**
 2) **Unsafe deserialization.**
 3) **Serialization to unsafe formats.**
-4) **Training without augmentation.**
-5) **Using untrustworthy assets.**
+4) **Using untrustworthy assets.**
+
+_(WIP)_
+5) **Training without augmentation.**
 6) **Evidence of insecure services.**
 
 Things we **don't** check for:
@@ -25,7 +28,7 @@ Many linters measure quality by the breadth of rules, leading to complicated CI/
 
 ## Compatibility
 
-Currently MLLint is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences).
+Currently MLLint is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences). TruffleHog supported both of these natively, but MLLint uses [nbconvert](https://nbconvert.readthedocs.io/en/latest/) under the hood to support Semgrep on `.ipynb`.
 
 ## Foundations
 
@@ -46,7 +49,7 @@ When run from the CLI, MLLint will return a summary report.
 
 ## Requirements
 
-Requirements are listed in [`requirements.txt`](requirements.txt), but the most notable requirement is the ability to build and run docker containers.
+Requirements are listed in [requirements.txt](requirements.txt), but the most notable requirement is the ability to build and run docker containers.
 
 ## Contributing
 
