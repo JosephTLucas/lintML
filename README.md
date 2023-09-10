@@ -25,7 +25,7 @@ Many linters measure quality by the breadth of rules, leading to complicated CI/
 
 ## Compatibility
 
-Currently MLLint is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences).
+Currently MLLint is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences). TruffleHog supported both of these natively, but MLLint uses [nbconvert](https://nbconvert.readthedocs.io/en/latest/) under the hood to support Semgrep on `.ipynb`.
 
 ## Foundations
 
@@ -46,7 +46,7 @@ When run from the CLI, MLLint will return a summary report.
 
 ## Requirements
 
-Requirements are listed in [`requirements.txt`](requirements.txt), but the most notable requirement is the ability to build and run docker containers.
+Requirements are listed in [requirements.txt](requirements.txt), but the most notable requirement is the ability to build and run docker containers.
 
 ## Contributing
 
