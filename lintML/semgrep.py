@@ -1,7 +1,7 @@
-from observation import Observation
+from lintML.observation import Observation
 import json
 from tempfile import TemporaryDirectory
-from ipynb_convert import get_ipynb_code
+from lintML.ipynb_convert import get_ipynb_code
 from pathlib import Path
 import docker
 from typing import List, Dict

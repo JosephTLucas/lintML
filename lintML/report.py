@@ -1,10 +1,10 @@
-from observation import Observation
+from lintML.observation import Observation
 from pathlib import Path
 from fastavro import schema, writer, reader
 from typing import List, Dict
 from itertools import chain
 from importlib_resources import files
-import schemas
+import lintML.schemas as schemas
 
 
 class Report:

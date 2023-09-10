@@ -41,18 +41,18 @@ lintML uses [Apache Avro](https://avro.apache.org/) for data serialization to su
 
 ## Getting Started
 
-1. `pip install -r requirements.txt`
-2. `python lintML.py <your directory>` -- If you don't specify a directory, lintML will default to the current working directory.
+1. `pip install lintML`
+2. `lintML <your directory>` -- If you don't specify a directory, lintML will default to the current working directory.
 
 When run from the CLI, lintML will return a summary report.
 
 ![](results.png)
 
-3. To get a more detailed report, use the `--full-report` argument (`python lintML.py <your directory> --full-report`). Results are also persisted in `.avro` for later analysis and manipulation in your favorite data analysis tools.
+3. To get a more detailed report, use the `--full-report` argument (`lintML <your directory> --full-report`). Results are also persisted in `.avro` for later analysis and manipulation in your favorite data analysis tools.
 
 ## Requirements
 
-Requirements are listed in [requirements.txt](requirements.txt), but the most notable requirement is the ability to build and run docker containers.
+Requirements are listed in [poetry.lock](poetry.lock), but the most notable requirement is the ability to build and run docker containers.
 
 ## Contributing
 

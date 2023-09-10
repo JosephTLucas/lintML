@@ -1,4 +1,4 @@
-from observation import Observation
+from lintML.observation import Observation
 import json
 import docker
 from pathlib import Path
