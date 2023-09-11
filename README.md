@@ -1,6 +1,6 @@
 # lintML
 
-![](banner.png)
+![](static/banner.png)
 
 _The security linter for environments that shouldn't need linting._
 
@@ -46,7 +46,7 @@ lintML uses [Apache Avro](https://avro.apache.org/) for data serialization to su
 
 When run from the CLI, lintML will return a summary report.
 
-![](results.png)
+![](static/results.png)
 
 3. To get a more detailed report, use the `--full-report` argument (`lintML <your directory> --full-report`). Results are also persisted in `.avro` for later analysis and manipulation in your favorite data analysis tools.
 
