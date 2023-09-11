@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lintml"
-version = "0.0.4"
+version = "0.0.5"
 description = "A security-first linter for machine learning training code."
 authors = ["Joseph Lucas <joe@joetl.com>"]
 license = "GPL-3.0-only"
