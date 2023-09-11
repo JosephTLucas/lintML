@@ -45,7 +45,9 @@ class lintML:
             exit()
         async with asyncio.TaskGroup() as tg:
             trufflehog = tg.create_task(run_trufflehog(client, self.indir))
-            semgrep = tg.create_task(run_semgrep(client, self.indir, self.semgrep_options))
+            semgrep = tg.create_task(
+                run_semgrep(client, self.indir, self.semgrep_options)
+            )
         trufflehog = trufflehog.result()
         semgrep = semgrep.result()
         return trufflehog, semgrep
@@ -68,8 +70,8 @@ def cli():
         "--full-report", action="store_true", help="Generate a full report"
     )
     parser.add_argument(
-        "--semgrep-options", 
-        type=str, 
+        "--semgrep-options",
+        type=str,
         default=None,
         help="Options to pass to semgrep, e.g., '--config p/python'",
     )
@@ -80,7 +82,11 @@ def cli():
         help="Output file for observations",
     )
     args = parser.parse_args()
-    m = lintML(indir=Path(args.dir).resolve(), semgrep_options=args.semgrep_options, outfile=args.outfile)
+    m = lintML(
+        indir=Path(args.dir).resolve(),
+        semgrep_options=args.semgrep_options,
+        outfile=args.outfile,
+    )
     loop = asyncio.get_event_loop()
     creds, code_findings = loop.run_until_complete(m.get_observations())
     print(m.generate_report(creds, code_findings, args.full_report))

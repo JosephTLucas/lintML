@@ -36,7 +36,7 @@ async def semgrep_prep(dir: Path) -> TemporaryDirectory:
 
     Args:
         dir (Path): The directory containing the code to be analyzed.
-        
+
 
     Returns:
         TemporaryDirectory: A temporary directory containing the code converted to Python.
@@ -50,7 +50,9 @@ async def semgrep_prep(dir: Path) -> TemporaryDirectory:
     return tmpdir
 
 
-async def run_semgrep(client: docker.DockerClient, dir: Path, options: str) -> List[Observation]:
+async def run_semgrep(
+    client: docker.DockerClient, dir: Path, options: str
+) -> List[Observation]:
     """
     Run Semgrep analysis on a directory using a Docker container.
 
@@ -68,14 +70,16 @@ async def run_semgrep(client: docker.DockerClient, dir: Path, options: str) -> L
     tmpdir = await semgrep_prep(dir)
     if not options:
         rule_root = "https://raw.githubusercontent.com/JosephTLucas/lintML/main/lintML/semgrep_rules/ready/"
-        rules = ["",
-                "huggingface-remote-code.yaml",
-                'pickles.yaml',
-                "sg_shelve.yaml",
-                "tob_pickles-in-numpy.yaml",
-                "tob_pickles-in-pandas.yaml",
-                "tob_pickles-in-pytorch.yaml",
-                "tob_scikit-joblib-load.yaml"]
+        rules = [
+            "",
+            "huggingface-remote-code.yaml",
+            "pickles.yaml",
+            "sg_shelve.yaml",
+            "tob_pickles-in-numpy.yaml",
+            "tob_pickles-in-pandas.yaml",
+            "tob_pickles-in-pytorch.yaml",
+            "tob_scikit-joblib-load.yaml",
+        ]
         options = f" --config {rule_root}".join(rules)
     elif options[0] != " ":
         options = " " + options
@@ -95,7 +99,9 @@ async def run_semgrep(client: docker.DockerClient, dir: Path, options: str) -> L
             create_semgrep_observation(f) for f in container_json["results"]
         ]
     except docker.errors.ContainerError:
-        logging.exception("Semgrep returned an error. If you are passing custom arguments with '--semgrep-options', verify that they are valid.")
+        logging.exception(
+            "Semgrep returned an error. If you are passing custom arguments with '--semgrep-options', verify that they are valid."
+        )
         exit()
     finally:
         tmpdir.cleanup()
