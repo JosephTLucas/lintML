@@ -49,6 +49,7 @@ When run from the CLI, lintML will return a summary report.
 ![](static/results.png)
 
 3. To get a more detailed report, use the `--full-report` argument (`lintML <your directory> --full-report`). Results are also persisted in `.avro` for later analysis and manipulation in your favorite data analysis tools.
+4. The cli also exposes optional arguments for `--semgrep-options` and `--outfile`. For instance, `lintML --semgrep-options "--config 'p/python' --config 'p/trailofbits'" --outfile obs/obs1.avro ~/example`
 
 ## Requirements
 
@@ -60,4 +61,4 @@ To immediately contribute security outcomes, consider contributing new rules to 
 
 Please also report any false positives or negatives to help us fine-tune rules or create new ones.
 
-To add a new security tool to lintML, simply write an async function that returns [Observations](observation.py). PRs welcome.
+To add a new security tool to lintML, simply write an async function that returns [Observations](lintML/observation.py). PRs welcome.
