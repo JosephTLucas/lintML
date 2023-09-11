@@ -8,7 +8,7 @@ Linters (and let's be honest with ourselves, any measures of code quality) have 
 
 ## Philosophy
 
-lintML is a simple python script (backed by dockerized security tools) that can give researchers and security teams some quick insight into potential risk in machine learning research projects. It checks for valid, plaintext credentials and uses static analysis to identify risky code patterns.
+lintML is a command line application (backed by dockerized security tools) that can give researchers and security teams some quick insight into potential risk in machine learning research projects. It checks for valid, plaintext credentials and uses static analysis to identify risky code patterns.
 
 Things we check for:
 
