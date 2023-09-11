@@ -3,6 +3,7 @@ import json
 import docker
 from pathlib import Path
 from typing import List
+import logging
 
 
 def create_trufflehog_observation(finding):
@@ -24,7 +25,7 @@ def create_trufflehog_observation(finding):
     )
 
 
-async def run_trufflehog(client: docker.DockerClient, dir: Path) -> List[Observation]:
+def run_trufflehog(dir: Path) -> List[Observation]:
     """
     Run Trufflehog analysis on a directory using a Docker container.
 
@@ -38,6 +39,13 @@ async def run_trufflehog(client: docker.DockerClient, dir: Path) -> List[Observa
     Raises:
         Any exceptions raised by Docker operations, JSON decoding, or Observation creation.
     """
+    try:
+        client = docker.from_env()
+    except docker.errors.DockerException:
+        logging.exception(
+            "Unable to resolve docker environment. Ensure user is logged into docker and a member of the docker group on the host."
+        )
+        exit()
     container_bytes = client.containers.run(
         "trufflesecurity/trufflehog:latest",
         command="filesystem /pwd --json --only-verified",

@@ -8,11 +8,15 @@ import logging
 from lintML.observation import Observation
 import os
 from lintML.report import Report
-from lintML.utils import is_valid_directory
+from lintML.utils import is_valid_directory, async_runner
+from concurrent.futures import ProcessPoolExecutor
 
 
 class lintML:
-    def __init__(self, indir, semgrep_options, outfile="obs/observation.avro"):
+    def __init__(
+        self, event_loop, indir, semgrep_options, outfile="obs/observation.avro"
+    ):
+        self.loop = event_loop
         self.indir = Path(indir)
         self.outfile = Path(outfile)
         self.report = None
@@ -36,20 +40,13 @@ class lintML:
             docker.errors.DockerException: If unable to connect to the Docker environment.
             Any exceptions raised by the underlying functions run_trufflehog and run_semgrep.
         """
-        try:
-            client = docker.from_env()
-        except docker.errors.DockerException:
-            logging.exception(
-                "Unable to resolve docker environment. Ensure user is logged into docker and a member of the docker group on the host."
+        with ProcessPoolExecutor(2) as pool:
+            trufflehog = await self.loop.run_in_executor(
+                pool, run_trufflehog, self.indir
             )
-            exit()
-        async with asyncio.TaskGroup() as tg:
-            trufflehog = tg.create_task(run_trufflehog(client, self.indir))
-            semgrep = tg.create_task(
-                run_semgrep(client, self.indir, self.semgrep_options)
+            semgrep = await self.loop.run_in_executor(
+                pool, run_semgrep, self.indir, self.semgrep_options
             )
-        trufflehog = trufflehog.result()
-        semgrep = semgrep.result()
         return trufflehog, semgrep
 
 
@@ -82,12 +79,13 @@ def cli():
         help="Output file for observations",
     )
     args = parser.parse_args()
+    loop = asyncio.get_event_loop()
     m = lintML(
+        event_loop=loop,
         indir=Path(args.dir).resolve(),
         semgrep_options=args.semgrep_options,
         outfile=args.outfile,
     )
-    loop = asyncio.get_event_loop()
     creds, code_findings = loop.run_until_complete(m.get_observations())
     print(m.generate_report(creds, code_findings, args.full_report))
 

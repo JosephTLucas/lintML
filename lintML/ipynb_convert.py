@@ -13,7 +13,7 @@ def filter_comments(code: str) -> str:
     )
 
 
-async def get_ipynb_code(ipynb_iter: Iterable[Path], tmpdir: TemporaryDirectory):
+def get_ipynb_code(ipynb_iter: Iterable[Path], tmpdir: TemporaryDirectory):
     """
     Convert a collection of Jupyter notebooks to Python files.
 

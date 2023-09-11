@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 
 
 def is_valid_directory(path: str) -> bool:
@@ -20,6 +20,6 @@ def is_valid_directory(path: str) -> bool:
         raise argparse.ArgumentTypeError(f"'{path}' is not a valid directory.")
 
 
-async def async_runner(loop, func):
-    _executor = ThreadPoolExecutor(1)
-    return await loop.run_in_executor(_executor, func)
+async def async_runner(loop, func, args):
+    _executor = ProcessPoolExecutor(1)
+    return await loop.run_in_executor(_executor, func, args)

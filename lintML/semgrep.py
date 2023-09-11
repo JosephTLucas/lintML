@@ -30,7 +30,7 @@ def create_semgrep_observation(finding: Dict) -> Observation:
     )
 
 
-async def semgrep_prep(dir: Path) -> TemporaryDirectory:
+def semgrep_prep(dir: Path) -> TemporaryDirectory:
     """
     Convert .ipynb files to .py in a temporary directory for semgrep analysis
 
@@ -46,13 +46,11 @@ async def semgrep_prep(dir: Path) -> TemporaryDirectory:
     """
     tmpdir = TemporaryDirectory(dir=dir, ignore_cleanup_errors=True)
     ipynb_files = dir.rglob("*.ipynb")
-    await get_ipynb_code(ipynb_files, tmpdir)
+    get_ipynb_code(ipynb_files, tmpdir)
     return tmpdir
 
 
-async def run_semgrep(
-    client: docker.DockerClient, dir: Path, options: str
-) -> List[Observation]:
+def run_semgrep(dir: Path, options: str) -> List[Observation]:
     """
     Run Semgrep analysis on a directory using a Docker container.
 
@@ -67,7 +65,14 @@ async def run_semgrep(
     Raises:
         Any exceptions raised by Docker operations, JSON decoding, or Observation creation.
     """
-    tmpdir = await semgrep_prep(dir)
+    tmpdir = semgrep_prep(dir)
+    try:
+        client = docker.from_env()
+    except docker.errors.DockerException:
+        logging.exception(
+            "Unable to resolve docker environment. Ensure user is logged into docker and a member of the docker group on the host."
+        )
+        exit()
     if not options:
         rule_root = "https://raw.githubusercontent.com/JosephTLucas/lintML/main/lintML/semgrep_rules/ready/"
         rules = [
