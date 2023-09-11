@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-lintML = 'lintML.cli:run'
+lintML = 'lintML.lintML:cli'
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -73,6 +73,7 @@ webencodings = "0.5.1"
 websocket-client = "1.6.2"
 wheel = "0.41.2"
 importlib-resources = "^6.0.1"
+pre-commit = "^3.4.0"
 
 
 [build-system]
