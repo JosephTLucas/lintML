@@ -49,6 +49,7 @@ When run from the CLI, lintML will return a summary report.
 ![](static/results.png)
 
 3. To get a more detailed report, use the `--full-report` argument (`lintML <your directory> --full-report`). Results are also persisted in `.avro` for later analysis and manipulation in your favorite data analysis tools.
+4. The cli also exposes optional arguments for `--semgrep-options` and `--outfile`. For instance, `lintML --semgrep-options "--config 'p/python' --config 'p/trailofbits'" --outfile obs/obs1.avro ~/example`
 
 ## Requirements
 
