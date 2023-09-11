@@ -20,6 +20,6 @@ def is_valid_directory(path: str) -> bool:
         raise argparse.ArgumentTypeError(f"'{path}' is not a valid directory.")
 
 
-async def async_runner(self, loop, func):
+async def async_runner(loop, func):
     _executor = ThreadPoolExecutor(1)
     return await loop.run_in_executor(_executor, func)
