@@ -12,10 +12,11 @@ from lintML.utils import is_valid_directory
 
 
 class lintML:
-    def __init__(self, indir, outfile="obs/observation.avro"):
+    def __init__(self, indir, semgrep_options, outfile="obs/observation.avro"):
         self.indir = Path(indir)
         self.outfile = Path(outfile)
         self.report = None
+        self.semgrep_options = semgrep_options
 
     def generate_report(
         self, trufflehog: list[Observation], semgrep: list[Observation], full=False
@@ -44,14 +45,13 @@ class lintML:
             exit()
         async with asyncio.TaskGroup() as tg:
             trufflehog = tg.create_task(run_trufflehog(client, self.indir))
-            semgrep = tg.create_task(run_semgrep(client, self.indir))
+            semgrep = tg.create_task(run_semgrep(client, self.indir, self.semgrep_options))
         trufflehog = trufflehog.result()
         semgrep = semgrep.result()
         return trufflehog, semgrep
 
 
-
-if __name__ == "__main__":
+def cli():
     parser = argparse.ArgumentParser(
         prog="lintML",
         description="Linter for ML training code",
@@ -67,8 +67,24 @@ if __name__ == "__main__":
     parser.add_argument(
         "--full-report", action="store_true", help="Generate a full report"
     )
+    parser.add_argument(
+        "--semgrep-options", 
+        type=str, 
+        default=None,
+        help="Options to pass to semgrep, e.g., '--config p/python'",
+    )
+    parser.add_argument(
+        "--outfile",
+        type=str,
+        default="obs/observation.avro",
+        help="Output file for observations",
+    )
     args = parser.parse_args()
-    m = lintML(indir=Path(args.dir).resolve())
+    m = lintML(indir=Path(args.dir).resolve(), semgrep_options=args.semgrep_options, outfile=args.outfile)
     loop = asyncio.get_event_loop()
     creds, code_findings = loop.run_until_complete(m.get_observations())
     print(m.generate_report(creds, code_findings, args.full_report))
+
+
+if __name__ == "__main__":
+    cli()
