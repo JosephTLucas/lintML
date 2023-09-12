@@ -31,7 +31,7 @@ Many linters measure quality by the breadth of rules, leading to complicated CI/
 
 ## Compatibility
 
-Currently lintML is focused on `.py` and `.ipynb` files (based solely on the author's personal preferences). TruffleHog supported both of these natively, but lintML uses [nbconvert](https://nbconvert.readthedocs.io/en/latest/) under the hood to support Semgrep on `.ipynb`.
+Currently lintML is focused on `.py` and `.ipynb` files and PyTorch (based solely on the author's personal preferences). TruffleHog supported both of these file formats natively, but lintML uses [nbconvert](https://nbconvert.readthedocs.io/en/latest/) under the hood to support Semgrep on `.ipynb`. Support for other machine learning libraries is on the roadmap.
 
 ## Foundations
 
